@@ -38,11 +38,12 @@ Thumbs.db
 # Large files & ISO
 *.iso
 *.bin.zst
-TyechUSB/squashfs-root/
+*.squashfs
+TyechUSB/
+certificates/
 
 # Sensitive data
 *.json
-certificates/
 
 # Build artifacts
 dist/

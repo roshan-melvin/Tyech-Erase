@@ -1,0 +1,16 @@
+# TyechErase v2.1 Dependencies
+# Updated: September 5, 2025
+
+# PDF generation for certificates
+reportlab>=4.4.0
+
+# Cryptographic operations for digital signatures
+cryptography>=45.0.0
+
+# Image processing for enhanced PDF reports
+pillow>=11.0.0
+
+# Additional dependencies installed automatically:
+# - cffi (for cryptography)
+# - charset-normalizer (for text processing)
+# - pycparser (for C parsing in cryptography)
