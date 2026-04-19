@@ -6,7 +6,8 @@ __pycache__/
 .Python
 env/
 venv/
-.venv
+.venv/
+.venv*/
 pip-log.txt
 pip-delete-this-directory.txt
 .tox/
@@ -22,6 +23,10 @@ coverage.xml
 # Virtual Environments
 tyech/
 /keys/
+engine/keys/
+
+# Sensitive key material
+*.pem
 
 # IDE
 .vscode/

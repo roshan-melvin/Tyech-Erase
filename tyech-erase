@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# Wrapper to run Tyech Secure Eraser's main.py using the project's virtualenv
+# This script is safe to call from services and preserves arguments.
+
+set -euo pipefail
+
+# Resolve script directory even with symlinks
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do
+	DIR="$(cd -P "$(dirname "$SOURCE")" >/dev/null 2>&1 && pwd)"
+	SOURCE="$(readlink "$SOURCE")"
+	[[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
+done
+SCRIPT_DIR="$(cd -P "$(dirname "$SOURCE")" >/dev/null 2>&1 && pwd)"
+
+# Prefer a virtualenv in the project `tyech` directory, fall back to system python3
+VENV_PY="$SCRIPT_DIR/tyech/bin/python"
+if [ ! -x "$VENV_PY" ]; then
+	VENV_PY="$(command -v python3 || true)"
+	if [ -z "$VENV_PY" ]; then
+		echo "ERROR: python3 not found and virtualenv not present at $SCRIPT_DIR/tyech" >&2
+		exit 2
+	fi
+fi
+
+MAIN_PY="$SCRIPT_DIR/main.py"
+if [ ! -f "$MAIN_PY" ]; then
+	echo "ERROR: main.py not found in $SCRIPT_DIR" >&2
+	exit 3
+fi
+
+exec "$VENV_PY" "$MAIN_PY" "$@"

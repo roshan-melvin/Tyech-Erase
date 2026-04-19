@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block title %}Verify Certificate | Tyech Secure Eraser{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <h2 class="mb-4">Verify Certificate</h2>
+    <form method="post" class="mb-4">
+        <div class="mb-3">
+            <label for="cert_file" class="form-label">Select Certificate File (JSON)</label>
+            <select name="cert_file" id="cert_file" class="form-select" required>
+                <option value="">-- Select Certificate --</option>
+                {% for fname in cert_files %}
+                    <option value="{{ fname }}">{{ fname }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Verify</button>
+    </form>
+    {% if verify_result %}
+        {% if verify_result.error %}
+            <div class="alert alert-danger">Error: {{ verify_result.error }}</div>
+        {% elif verify_result.valid %}
+            <div class="alert alert-success">Certificate <strong>{{ verify_result.cert_file }}</strong> is <strong>VALID</strong>.</div>
+        {% else %}
+            <div class="alert alert-danger">Certificate <strong>{{ verify_result.cert_file }}</strong> is <strong>INVALID</strong>.</div>
+        {% endif %}
+        {% if verify_result.cert_data %}
+            <h5>Certificate Data:</h5>
+            <pre class="bg-light p-3 border">{{ verify_result.cert_data | tojson(indent=2) }}</pre>
+        {% endif %}
+    {% endif %}
+</div>
+{% endblock %}

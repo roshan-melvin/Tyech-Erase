@@ -11,6 +11,48 @@ This project is a **secure data eraser application** with:
 - **Certificate Generation**: Automated certificate creation for compliance
 - **Advanced Features**: Mobile device support, batch operations, detailed reporting
 
+## 🎬 Demo Video
+
+- Watch here: https://youtu.be/t7TazOitMWE?si=v8UP_WXLU39qVQLm
+
+## 🖼️ Screenshots
+
+<table>
+   <tr>
+      <td align="center" width="50%"><b>1) Home / Landing Page</b></td>
+      <td align="center" width="50%"><b>2) Device Discovery Page</b></td>
+   </tr>
+   <tr>
+      <td align="center"><img src="pic/home-landing-page.png" alt="Home / Landing Page" width="430" /></td>
+      <td align="center"><img src="pic/device-discovery-page.png" alt="Device Discovery Page" width="430" /></td>
+   </tr>
+   <tr>
+      <td align="center">Main entry screen with primary navigation.</td>
+      <td align="center">Detected devices and categories before erase selection.</td>
+   </tr>
+   <tr>
+      <td align="center" width="50%"><b>3) Erase Workflow Page</b></td>
+      <td align="center" width="50%"><b>4) Recovery Data / Progress Page</b></td>
+   </tr>
+   <tr>
+      <td align="center"><img src="pic/erase-workflow-page.png" alt="Erase Workflow Page" width="430" /></td>
+      <td align="center"><img src="pic/recovery-data-progress-page.png" alt="Recovery Data / Progress Page" width="430" /></td>
+   </tr>
+   <tr>
+      <td align="center">Device and method selection to start secure wipe.</td>
+      <td align="center">Recovery/progress tracking view during post-wipe flow.</td>
+   </tr>
+   <tr>
+      <td align="center" colspan="2"><b>5) Wipe Completed Certificate Page</b></td>
+   </tr>
+   <tr>
+      <td align="center" colspan="2"><img src="pic/wipe-completed-certificate-page.png" alt="Wipe Completed Certificate Page" width="520" /></td>
+   </tr>
+   <tr>
+      <td align="center" colspan="2">Final completion screen showing secure erase certificate details.</td>
+   </tr>
+</table>
+
 ## 🚀 Quick Start
 
 ### Prerequisites

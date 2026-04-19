@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block title %}Certificates | Tyech Secure Eraser{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <h2 class="mb-4">Certificates</h2>
+    <p>View and download erasure certificates here.</p>
+    {% if cert_files %}
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Certificate File</th>
+                    <th>Type</th>
+                    <th>Download</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for fname in cert_files %}
+                    <tr>
+                        <td>{{ fname }}</td>
+                        <td>{{ 'PDF' if fname.endswith('.pdf') else 'JSON' }}</td>
+                        <td><a href="/certificates/{{ fname }}" class="btn btn-primary btn-sm" download>Download</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-warning">No certificates found.</div>
+    {% endif %}
+</div>
+{% endblock %}

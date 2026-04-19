@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block title %}Devices | Tyech Secure Eraser{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <h2 class="mb-4">Devices</h2>
+    <p>Below is the list of detected storage devices categorized by type.</p>
+    {% for category, devs in devices.items() %}
+        <h4 class="mt-4">{{ category|capitalize }} Devices</h4>
+        {% if devs and devs != 'adb not installed or no devices' and devs != 'fastboot not installed or no devices' %}
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Name/ID</th>
+                        <th>Size</th>
+                        <th>Model</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for dev in devs %}
+                        <tr>
+                            <td>{{ dev.name if dev.name else dev.id }}</td>
+                            <td>{{ dev.size if dev.size else 'N/A' }}</td>
+                            <td>{{ dev.model if dev.model else 'N/A' }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="alert alert-warning">{{ devs }}</div>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block title %}Dashboard | Tyech Secure Eraser{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <h2 class="mb-4">Dashboard</h2>
+    <p>Monitor erasure jobs, device status, and view recent activity.</p>
+    {% if erase_jobs %}
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Certificate ID</th>
+                    <th>Device</th>
+                    <th>Timestamp</th>
+                    <th>Method</th>
+                    <th>Status</th>
+                    <th>Certificate</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for job in erase_jobs %}
+                    <tr>
+                        <td>{{ job.certificate_id }}</td>
+                        <td>{{ job.device }}</td>
+                        <td>{{ job.timestamp }}</td>
+                        <td>{{ job.method }}</td>
+                        <td>{{ job.status }}</td>
+                        <td><a href="/certificates/{{ job.file }}" class="btn btn-primary btn-sm" download>Download</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-warning">No erasure jobs found.</div>
+    {% endif %}
+</div>
+{% endblock %}

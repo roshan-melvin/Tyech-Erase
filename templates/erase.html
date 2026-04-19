@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+{% block title %}Erase | Tyech Secure Eraser{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <h2 class="mb-4">Erase Device</h2>
+    <p>Select a device and erasure method to begin secure wiping.</p>
+    <form method="post" class="mb-4">
+        <div class="row">
+            <div class="col-md-5">
+                <label for="device_name" class="form-label">Device</label>
+                <select name="device_name" id="device_name" class="form-select" required>
+                    <option value="">-- Select Device --</option>
+                    {% for category, devs in devices.items() %}
+                        {% if devs and devs != 'adb not installed or no devices' and devs != 'fastboot not installed or no devices' %}
+                            {% for dev in devs %}
+                                <option value="{{ dev.name if dev.name else dev.id }}" data-type="{{ category }}">{{ category|capitalize }}: {{ dev.name if dev.name else dev.id }} ({{ dev.model if dev.model else 'N/A' }}, {{ dev.size if dev.size else 'N/A' }})</option>
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                <input type="hidden" name="device_type" id="device_type" value="">
+            </div>
+            <div class="col-md-4">
+                <label for="method" class="form-label">Erasure Method</label>
+                <select name="method" id="method" class="form-select">
+                    <option value="secure">Secure Erase</option>
+                    <option value="quick">Quick Erase</option>
+                    <option value="fast">Fast Erase</option>
+                    <option value="format">Secure Format</option>
+                </select>
+            </div>
+            <div class="col-md-3 d-flex align-items-end">
+                <button type="submit" class="btn btn-danger">Erase Device</button>
+            </div>
+        </div>
+    </form>
+    {% if erase_result %}
+        {% if erase_result.success %}
+            <div class="alert alert-success">Erase completed successfully!</div>
+        {% else %}
+            <div class="alert alert-danger">Erase failed. See log below.</div>
+        {% endif %}
+        <h5>Erase Log:</h5>
+        <pre class="bg-light p-3 border">{% for entry in erase_result.log %}{{ entry }}
+{% endfor %}</pre>
+    {% endif %}
+</div>
+<script>
+// Auto-set device_type based on selected device
+document.getElementById('device_name').addEventListener('change', function() {
+    var selected = this.options[this.selectedIndex];
+    document.getElementById('device_type').value = selected.getAttribute('data-type');
+});
+</script>
+{% endblock %}

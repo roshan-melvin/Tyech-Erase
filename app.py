@@ -1,24 +1,16 @@
-
 #!/usr/bin/env python3
 """
 Main Flask application for Tyech Secure Eraser website.
 Serves all main pages and connects templates.
 """
 
-from flask import Flask, render_template, request, redirect, url_for, flash, send_from_directory
+from flask import Flask, render_template, request, redirect, url_for, flash
 import json
-import os
-import sys
 from engine.device_utils import list_devices, get_device_details
 from engine.erase_engine import EraseEngine
 
 app = Flask(__name__)
 app.secret_key = 'tyech-secure-key'  # For flash messages
-
-# Add a route to serve static files explicitly
-@app.route('/static/<path:filename>')
-def serve_static(filename):
-    return send_from_directory('static', filename)
 
 # Home page
 @app.route('/')
@@ -29,7 +21,7 @@ def index():
 @app.route('/dashboard')
 def dashboard():
 	# For demo, show last 10 erase logs from certificates (if available)
-	cert_dir = 'certificates'  # Use relative path in the same directory as app.py
+	cert_dir = '/home/rocroshan/Desktop/SIH(RF)/certificates'
 	erase_jobs = []
 	if os.path.exists(cert_dir):
 		for fname in sorted(os.listdir(cert_dir), reverse=True):
@@ -76,7 +68,7 @@ def erase():
 			cmd = ["sudo", "./tyech-erase", "--erase", device_name, "--type", device_type, "--method", method, "--yes"]
 			try:
 				# Set a reasonable timeout to avoid hanging web requests (seconds)
-				proc = subprocess.run(cmd, capture_output=True, text=True, cwd=".", timeout=300)
+				proc = subprocess.run(cmd, capture_output=True, text=True, cwd="/home/rocroshan/Desktop/SIH(RF)", timeout=300)
 				success = proc.returncode == 0
 				# Combine stdout and stderr, show last 50 lines for clarity
 				combined = (proc.stdout or '') + '\n' + (proc.stderr or '')
@@ -113,7 +105,7 @@ import os
 
 @app.route('/certificates')
 def certificates():
-	cert_dir = 'certificates'  # Use relative path in the same directory as app.py
+	cert_dir = '/home/rocroshan/Desktop/SIH(RF)/certificates'
 	cert_files = []
 	if os.path.exists(cert_dir):
 		for fname in os.listdir(cert_dir):
@@ -126,7 +118,7 @@ from engine.certificate_generator import CertificateGenerator
 
 @app.route('/verify', methods=['GET', 'POST'])
 def verify():
-	cert_dir = 'certificates'  # Use relative path in the same directory as app.py
+	cert_dir = '/home/rocroshan/Desktop/SIH(RF)/certificates'
 	cert_files = [f for f in os.listdir(cert_dir) if f.endswith('.json')] if os.path.exists(cert_dir) else []
 	verify_result = None
 	if request.method == 'POST':
@@ -149,7 +141,7 @@ def verify():
 					from cryptography.hazmat.primitives.asymmetric import ec
 					from cryptography.hazmat.primitives import serialization
 					from cryptography.exceptions import InvalidSignature
-					pubkey_path = 'keys/public_key.pem'  # Use relative path in the same directory as app.py
+					pubkey_path = '/home/rocroshan/Desktop/SIH(RF)/keys/public_key.pem'
 					with open(pubkey_path, 'rb') as pkf:
 						pubkey = serialization.load_pem_public_key(pkf.read())
 					try:
@@ -196,10 +188,5 @@ def api_docs():
 def status():
 	return render_template('status.html')
 
-# Favicon handler
-@app.route('/favicon.ico')
-def favicon():
-    return send_from_directory('static', 'images/favicon.ico')
-
 if __name__ == '__main__':
-	app.run(debug=True, host='0.0.0.0', port=5001)
+	app.run(debug=True)

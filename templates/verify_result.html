@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block title %}Verification Result | Tyech Secure Eraser{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <h2 class="mb-4">Verification Result</h2>
+    {% if result %}
+        <div class="alert alert-success">Certificate <strong>{{ code }}</strong> is valid!</div>
+    {% else %}
+        <div class="alert alert-danger">Certificate <strong>{{ code }}</strong> is NOT valid.</div>
+    {% endif %}
+    <a href="/verify" class="btn btn-secondary">Back to Verify</a>
+</div>
+{% endblock %}
